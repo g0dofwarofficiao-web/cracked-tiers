@@ -1,42 +1,35 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", function () {
 
-// Get all category buttons
 const categoryButtons = document.querySelectorAll(".category-tab");
-
 const categoryTitle = document.getElementById("categoryTitle");
 const tierListTitle = document.getElementById("tierListTitle");
 
-// Run only on the Rankings page
-if (categoryButtons.length > 0) {
+categoryButtons.forEach(function (button) {
 
-    categoryButtons.forEach((button) => {
+    button.addEventListener("click", function () {
 
-        button.addEventListener("click", () => {
-
-            // Remove the active style from every button
-            categoryButtons.forEach((btn) => {
-                btn.classList.remove("active");
-            });
-
-            // Make the clicked button active
-            button.classList.add("active");
-
-            // Get the category name
-            const category = button.dataset.category;
-
-            // Update the page titles
-            categoryTitle.textContent =
-                category.toUpperCase() + " RANKINGS";
-
-            tierListTitle.textContent =
-                category.toUpperCase() + " TIERS";
-
-            // For now, sample data stays the same.
-            // Later, Supabase will load real rankings here.
+        // Remove active status from all buttons
+        categoryButtons.forEach(function (btn) {
+            btn.classList.remove("active");
         });
+
+        // Make the clicked category active
+        button.classList.add("active");
+
+        // Get category name
+        const category = button.getAttribute("data-category");
+
+        // Change titles
+        if (categoryTitle) {
+            categoryTitle.textContent = category.toUpperCase() + " RANKINGS";
+        }
+
+        if (tierListTitle) {
+            tierListTitle.textContent = category.toUpperCase() + " TIERS";
+        }
 
     });
 
-}
+});
 
 });
