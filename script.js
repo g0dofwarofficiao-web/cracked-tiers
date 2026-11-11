@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
 // ================================
 const SUPABASE_URL = "https://twgnubacplneragssrot.supabase.co";
 
-const SUPABASE_KEY = "PASTE_YOUR_PUBLISHABLE_KEY_HERE";
+const SUPABASE_KEY = "sb_publishable_O4hAWDj8dTdSsHTL6j9nrg_SEOZIQiR";
 
 
 // ================================
