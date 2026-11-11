@@ -768,4 +768,177 @@ document.addEventListener("DOMContentLoaded", function () {
                                     tierName
                                 );
                             }
-                        )
+                        );
+if (
+                        playersInTier.length === 0
+                    ) {
+
+                        tierPlayers.innerHTML =
+                            "<span>No players yet</span>";
+
+                    } else {
+
+                        tierPlayers.innerHTML =
+                            playersInTier
+                                .map(
+                                    function (
+                                        player
+                                    ) {
+
+                                        const profileLink =
+                                            getPlayerLink(
+                                                player.player_name
+                                            );
+
+                                        return `
+                                            <a
+                                                href="${profileLink}"
+                                                class="player-link tier-player-link"
+                                            >
+                                                ${player.player_name}
+                                            </a>
+                                        `;
+                                    }
+                                )
+                                .join("");
+                    }
+                }
+            );
+        }
+
+
+        // ==========================================
+        // SHOW ERROR
+        // ==========================================
+        function showRankingError() {
+
+            const oldRows =
+                rankingTable.querySelectorAll(
+                    ".ranking-table-row:not(.table-header)"
+                );
+
+            oldRows.forEach(
+                function (row) {
+                    row.remove();
+                }
+            );
+
+
+            const errorRow =
+                document.createElement(
+                    "div"
+                );
+
+            errorRow.className =
+                "ranking-table-row";
+
+            errorRow.innerHTML = `
+                <span>!</span>
+
+                <span class="player-name">
+                    Unable to load rankings
+                </span>
+
+                <span>!</span>
+            `;
+
+            rankingTable.appendChild(
+                errorRow
+            );
+        }
+
+
+        // ==========================================
+        // SELECT CATEGORY
+        // ==========================================
+        function selectCategory(category) {
+
+            categoryButtons.forEach(
+                function (button) {
+
+                    const buttonCategory =
+                        button.getAttribute(
+                            "data-category"
+                        );
+
+                    button.classList.remove(
+                        "active"
+                    );
+
+                    if (
+                        buttonCategory ===
+                        category
+                    ) {
+
+                        button.classList.add(
+                            "active"
+                        );
+                    }
+                }
+            );
+
+
+            if (categoryTitle) {
+
+                categoryTitle.textContent =
+                    category.toUpperCase() +
+                    " RANKINGS";
+            }
+
+
+            if (tierListTitle) {
+
+                tierListTitle.textContent =
+                    category.toUpperCase() +
+                    " TIERS";
+            }
+
+
+            loadRankings(category);
+        }
+
+
+        // Load category from URL
+        selectCategory(selectedCategory);
+
+
+        // ==========================================
+        // CATEGORY BUTTON CLICKS
+        // ==========================================
+        categoryButtons.forEach(
+            function (button) {
+
+                button.addEventListener(
+                    "click",
+                    function () {
+
+                        const category =
+                            button.getAttribute(
+                                "data-category"
+                            );
+
+
+                        selectCategory(
+                            category
+                        );
+
+
+                        const newUrl =
+                            "rankings.html?category=" +
+                            encodeURIComponent(
+                                category
+                            );
+
+
+                        window.history.replaceState(
+                            {},
+                            "",
+                            newUrl
+                        );
+                    }
+                );
+            }
+        );
+    }
+
+});
