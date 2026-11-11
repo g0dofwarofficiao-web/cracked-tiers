@@ -3,7 +3,8 @@ document.addEventListener("DOMContentLoaded", function () {
     // ================================
     // SUPABASE CONNECTION
     // ================================
-    const SUPABASE_URL = "https://twgnubacplneragssrot.supabase.co";
+    const SUPABASE_URL =
+        "https://twgnubacplneragssrot.supabase.co";
 
     const SUPABASE_KEY =
         "sb_publishable_O4hAWDj8dTdSsHTL6j9nrg_SEOZIQiR";
@@ -21,16 +22,31 @@ document.addEventListener("DOMContentLoaded", function () {
             {
                 headers: {
                     "apikey": SUPABASE_KEY,
-                    "Authorization": "Bearer " + SUPABASE_KEY
+                    "Authorization":
+                        "Bearer " + SUPABASE_KEY
                 }
             }
         );
 
         if (!response.ok) {
-            throw new Error("Could not load rankings");
+            throw new Error(
+                "Could not load rankings"
+            );
         }
 
         return await response.json();
+    }
+
+
+    // ==========================================
+    // CREATE PLAYER PROFILE LINK
+    // ==========================================
+    function getPlayerLink(playerName) {
+
+        return (
+            "player.html?name=" +
+            encodeURIComponent(playerName)
+        );
     }
 
 
@@ -47,14 +63,18 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("searchResults");
 
 
-    if (searchInput && searchButton && searchResults) {
+    if (
+        searchInput &&
+        searchButton &&
+        searchResults
+    ) {
 
         async function searchPlayer() {
 
             const playerName =
                 searchInput.value.trim();
 
-            // Don't search an empty name
+
             if (playerName === "") {
 
                 searchResults.innerHTML = `
@@ -67,7 +87,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
 
-            // Show loading message
             searchResults.innerHTML = `
                 <div class="search-message">
                     Searching...
@@ -77,7 +96,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
             try {
 
-                // Search database for the player
                 const players =
                     await fetchRankings(
                         "&player_name=ilike." +
@@ -85,12 +103,12 @@ document.addEventListener("DOMContentLoaded", function () {
                     );
 
 
-                // Player not found
                 if (players.length === 0) {
 
                     searchResults.innerHTML = `
                         <div class="search-message not-found">
-                            Player <strong>${playerName}</strong>
+                            Player
+                            <strong>${playerName}</strong>
                             is not ranked yet.
                         </div>
                     `;
@@ -99,13 +117,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
 
-                // Show all rankings for the player
                 const rankingsHTML =
                     players
                         .map(function (player) {
 
                             return `
                                 <div class="search-ranking">
+
                                     <span class="search-category">
                                         ${player.category}
                                     </span>
@@ -113,22 +131,40 @@ document.addEventListener("DOMContentLoaded", function () {
                                     <span class="search-tier">
                                         ${player.tier}
                                     </span>
+
                                 </div>
                             `;
+
                         })
                         .join("");
+
+
+                const profileLink =
+                    getPlayerLink(
+                        players[0].player_name
+                    );
 
 
                 searchResults.innerHTML = `
                     <div class="player-result">
 
-                        <div class="player-result-name">
+                        <a
+                            href="${profileLink}"
+                            class="player-result-name player-link"
+                        >
                             ${players[0].player_name}
-                        </div>
+                        </a>
 
                         <div class="player-rankings">
                             ${rankingsHTML}
                         </div>
+
+                        <a
+                            href="${profileLink}"
+                            class="view-profile-button"
+                        >
+                            VIEW PLAYER PROFILE →
+                        </a>
 
                     </div>
                 `;
@@ -151,14 +187,12 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
 
-        // Search button click
         searchButton.addEventListener(
             "click",
             searchPlayer
         );
 
 
-        // Search when Enter is pressed
         searchInput.addEventListener(
             "keydown",
             function (event) {
@@ -172,10 +206,260 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     // ==========================================
+    // PLAYER PROFILE PAGE
+    // ==========================================
+    const playerProfileContent =
+        document.getElementById(
+            "playerProfileContent"
+        );
+
+
+    if (playerProfileContent) {
+
+        async function loadPlayerProfile() {
+
+            const urlParams =
+                new URLSearchParams(
+                    window.location.search
+                );
+
+            const requestedName =
+                urlParams.get("name");
+
+
+            if (!requestedName) {
+
+                playerProfileContent.innerHTML = `
+                    <div class="profile-message">
+                        <h1>PLAYER NOT FOUND</h1>
+
+                        <p>
+                            No player was selected.
+                        </p>
+
+                        <a
+                            href="index.html"
+                            class="primary-button"
+                        >
+                            GO HOME
+                        </a>
+                    </div>
+                `;
+
+                return;
+            }
+
+
+            try {
+
+                const players =
+                    await fetchRankings(
+                        "&player_name=ilike." +
+                        encodeURIComponent(
+                            requestedName
+                        )
+                    );
+
+
+                if (players.length === 0) {
+
+                    playerProfileContent.innerHTML = `
+                        <div class="profile-message">
+
+                            <p class="eyebrow">
+                                PLAYER PROFILE
+                            </p>
+
+                            <h1>PLAYER NOT FOUND</h1>
+
+                            <p>
+                                This player is not
+                                currently ranked on
+                                Cracked Tiers.
+                            </p>
+
+                            <a
+                                href="rankings.html"
+                                class="primary-button"
+                            >
+                                VIEW RANKINGS
+                            </a>
+
+                        </div>
+                    `;
+
+                    return;
+                }
+
+
+                const actualPlayerName =
+                    players[0].player_name;
+
+
+                document.title =
+                    actualPlayerName +
+                    " | Cracked Tiers";
+
+
+                const rankingCards =
+                    players
+                        .map(function (player) {
+
+                            return `
+                                <a
+                                    href="rankings.html?category=${encodeURIComponent(
+                                        player.category
+                                    )}"
+                                    class="profile-ranking-card"
+                                >
+
+                                    <span class="profile-category">
+                                        ${player.category}
+                                    </span>
+
+                                    <span class="profile-tier">
+                                        ${player.tier}
+                                    </span>
+
+                                </a>
+                            `;
+
+                        })
+                        .join("");
+
+
+                playerProfileContent.innerHTML = `
+
+                    <div class="profile-header">
+
+                        <p class="eyebrow">
+                            PLAYER PROFILE
+                        </p>
+
+                        <h1>
+                            ${actualPlayerName}
+                        </h1>
+
+                        <p class="profile-subtitle">
+                            Official Cracked Tiers
+                            rankings.
+                        </p>
+
+                    </div>
+
+
+                    <div class="profile-stats">
+
+                        <div class="profile-stat">
+
+                            <span class="stat-number">
+                                ${players.length}
+                            </span>
+
+                            <span class="stat-label">
+                                RANKINGS
+                            </span>
+
+                        </div>
+
+
+                        <div class="profile-stat">
+
+                            <span class="stat-number">
+                                ${new Set(
+                                    players.map(
+                                        function (player) {
+                                            return player.category;
+                                        }
+                                    )
+                                ).size}
+                            </span>
+
+                            <span class="stat-label">
+                                CATEGORIES
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="profile-rankings-section">
+
+                        <div class="section-heading">
+
+                            <p class="eyebrow">
+                                COMPETITIVE RECORD
+                            </p>
+
+                            <h2>
+                                PLAYER RANKINGS
+                            </h2>
+
+                        </div>
+
+
+                        <div class="profile-ranking-grid">
+
+                            ${rankingCards}
+
+                        </div>
+
+                    </div>
+
+
+                    <a
+                        href="rankings.html"
+                        class="primary-button profile-back-button"
+                    >
+                        ← VIEW ALL RANKINGS
+                    </a>
+
+                `;
+
+
+            } catch (error) {
+
+                console.error(
+                    "Player profile loading error:",
+                    error
+                );
+
+                playerProfileContent.innerHTML = `
+                    <div class="profile-message">
+
+                        <h1>
+                            SOMETHING WENT WRONG
+                        </h1>
+
+                        <p>
+                            Unable to load this
+                            player's profile.
+                        </p>
+
+                        <a
+                            href="index.html"
+                            class="primary-button"
+                        >
+                            GO HOME
+                        </a>
+
+                    </div>
+                `;
+            }
+        }
+
+
+        loadPlayerProfile();
+    }
+
+
+    // ==========================================
     // HOME PAGE — LIVE TOP PLAYERS
     // ==========================================
     const homeLeaderboard =
         document.querySelector(".leaderboard");
+
 
     if (homeLeaderboard) {
 
@@ -186,14 +470,17 @@ document.addEventListener("DOMContentLoaded", function () {
                 const players =
                     await fetchRankings("");
 
+
                 const oldRows =
                     homeLeaderboard.querySelectorAll(
                         ".leaderboard-row:not(.header-row)"
                     );
 
-                oldRows.forEach(function (row) {
-                    row.remove();
-                });
+                oldRows.forEach(
+                    function (row) {
+                        row.remove();
+                    }
+                );
 
 
                 if (players.length === 0) {
@@ -206,9 +493,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     emptyRow.innerHTML = `
                         <span class="rank">-</span>
+
                         <span class="player">
                             No players ranked yet
                         </span>
+
                         <span class="tier">-</span>
                     `;
 
@@ -220,32 +509,49 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
 
-                players.slice(0, 3).forEach(
-                    function (player, index) {
+                players
+                    .slice(0, 3)
+                    .forEach(
+                        function (player, index) {
 
-                        const row =
-                            document.createElement("div");
+                            const row =
+                                document.createElement(
+                                    "div"
+                                );
 
-                        row.className =
-                            "leaderboard-row";
+                            row.className =
+                                "leaderboard-row";
 
-                        row.innerHTML = `
-                            <span class="rank">
-                                #${index + 1}
-                            </span>
 
-                            <span class="player">
-                                ${player.player_name}
-                            </span>
+                            const profileLink =
+                                getPlayerLink(
+                                    player.player_name
+                                );
 
-                            <span class="tier">
-                                ${player.tier}
-                            </span>
-                        `;
 
-                        homeLeaderboard.appendChild(row);
-                    }
-                );
+                            row.innerHTML = `
+                                <span class="rank">
+                                    #${index + 1}
+                                </span>
+
+                                <a
+                                    href="${profileLink}"
+                                    class="player player-link"
+                                >
+                                    ${player.player_name}
+                                </a>
+
+                                <span class="tier">
+                                    ${player.tier}
+                                </span>
+                            `;
+
+
+                            homeLeaderboard.appendChild(
+                                row
+                            );
+                        }
+                    );
 
             } catch (error) {
 
@@ -256,6 +562,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
 
+
         loadHomePlayers();
     }
 
@@ -264,22 +571,35 @@ document.addEventListener("DOMContentLoaded", function () {
     // RANKINGS PAGE — CATEGORY SYSTEM
     // ==========================================
     const categoryButtons =
-        document.querySelectorAll(".category-tab");
+        document.querySelectorAll(
+            ".category-tab"
+        );
 
     const categoryTitle =
-        document.getElementById("categoryTitle");
+        document.getElementById(
+            "categoryTitle"
+        );
 
     const tierListTitle =
-        document.getElementById("tierListTitle");
+        document.getElementById(
+            "tierListTitle"
+        );
 
     const rankingTable =
-        document.querySelector(".ranking-table");
+        document.querySelector(
+            ".ranking-table"
+        );
 
     const tierGroups =
-        document.querySelectorAll(".tier-group");
+        document.querySelectorAll(
+            ".tier-group"
+        );
 
 
-    if (categoryButtons.length > 0 && rankingTable) {
+    if (
+        categoryButtons.length > 0 &&
+        rankingTable
+    ) {
 
         const urlParams =
             new URLSearchParams(
@@ -287,7 +607,8 @@ document.addEventListener("DOMContentLoaded", function () {
             );
 
         const selectedCategory =
-            urlParams.get("category") || "Sword";
+            urlParams.get("category") ||
+            "Sword";
 
 
         async function loadRankings(category) {
@@ -297,8 +618,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 const players =
                     await fetchRankings(
                         "&category=eq." +
-                        encodeURIComponent(category)
+                        encodeURIComponent(
+                            category
+                        )
                     );
+
 
                 displayLeaderboard(players);
                 displayTierList(players);
@@ -315,6 +639,9 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
 
+        // ==========================================
+        // DISPLAY LEADERBOARD
+        // ==========================================
         function displayLeaderboard(players) {
 
             const oldRows =
@@ -322,28 +649,36 @@ document.addEventListener("DOMContentLoaded", function () {
                     ".ranking-table-row:not(.table-header)"
                 );
 
-            oldRows.forEach(function (row) {
-                row.remove();
-            });
+            oldRows.forEach(
+                function (row) {
+                    row.remove();
+                }
+            );
 
 
             if (players.length === 0) {
 
                 const emptyRow =
-                    document.createElement("div");
+                    document.createElement(
+                        "div"
+                    );
 
                 emptyRow.className =
                     "ranking-table-row";
 
                 emptyRow.innerHTML = `
                     <span>-</span>
+
                     <span class="player-name">
                         No players ranked yet
                     </span>
+
                     <span>-</span>
                 `;
 
-                rankingTable.appendChild(emptyRow);
+                rankingTable.appendChild(
+                    emptyRow
+                );
 
                 return;
             }
@@ -353,179 +688,84 @@ document.addEventListener("DOMContentLoaded", function () {
                 function (player, index) {
 
                     const row =
-                        document.createElement("div");
+                        document.createElement(
+                            "div"
+                        );
 
                     row.className =
                         "ranking-table-row";
+
+
+                    const profileLink =
+                        getPlayerLink(
+                            player.player_name
+                        );
+
 
                     row.innerHTML = `
                         <span class="position">
                             ${index + 1}
                         </span>
 
-                        <span class="player-name">
+                        <a
+                            href="${profileLink}"
+                            class="player-name player-link"
+                        >
                             ${player.player_name}
-                        </span>
+                        </a>
 
                         <span class="tier-badge">
                             ${player.tier}
                         </span>
                     `;
 
-                    rankingTable.appendChild(row);
+
+                    rankingTable.appendChild(
+                        row
+                    );
                 }
             );
         }
 
 
+        // ==========================================
+        // DISPLAY TIER LIST
+        // ==========================================
         function displayTierList(players) {
 
-            tierGroups.forEach(function (group) {
+            tierGroups.forEach(
+                function (group) {
 
-                const tierLabel =
-                    group.querySelector(".tier-label");
-
-                const tierPlayers =
-                    group.querySelector(
-                        ".tier-players"
-                    );
-
-                if (!tierLabel || !tierPlayers) {
-                    return;
-                }
-
-                const tierName =
-                    tierLabel.textContent.trim();
-
-                const playersInTier =
-                    players.filter(function (player) {
-                        return player.tier === tierName;
-                    });
-
-
-                if (playersInTier.length === 0) {
-
-                    tierPlayers.innerHTML =
-                        "<span>No players yet</span>";
-
-                } else {
-
-                    tierPlayers.innerHTML =
-                        playersInTier
-                            .map(function (player) {
-
-                                return `
-                                    <span>
-                                        ${player.player_name}
-                                    </span>
-                                `;
-
-                            })
-                            .join("");
-                }
-            });
-        }
-
-
-        function showRankingError() {
-
-            const oldRows =
-                rankingTable.querySelectorAll(
-                    ".ranking-table-row:not(.table-header)"
-                );
-
-            oldRows.forEach(function (row) {
-                row.remove();
-            });
-
-
-            const errorRow =
-                document.createElement("div");
-
-            errorRow.className =
-                "ranking-table-row";
-
-            errorRow.innerHTML = `
-                <span>!</span>
-
-                <span class="player-name">
-                    Unable to load rankings
-                </span>
-
-                <span>!</span>
-            `;
-
-            rankingTable.appendChild(errorRow);
-        }
-
-
-        function selectCategory(category) {
-
-            categoryButtons.forEach(function (button) {
-
-                const buttonCategory =
-                    button.getAttribute(
-                        "data-category"
-                    );
-
-                button.classList.remove("active");
-
-                if (buttonCategory === category) {
-                    button.classList.add("active");
-                }
-            });
-
-
-            if (categoryTitle) {
-
-                categoryTitle.textContent =
-                    category.toUpperCase() +
-                    " RANKINGS";
-            }
-
-
-            if (tierListTitle) {
-
-                tierListTitle.textContent =
-                    category.toUpperCase() +
-                    " TIERS";
-            }
-
-
-            loadRankings(category);
-        }
-
-
-        // Load category from URL
-        selectCategory(selectedCategory);
-
-
-        categoryButtons.forEach(function (button) {
-
-            button.addEventListener(
-                "click",
-                function () {
-
-                    const category =
-                        button.getAttribute(
-                            "data-category"
+                    const tierLabel =
+                        group.querySelector(
+                            ".tier-label"
                         );
 
-                    selectCategory(category);
+                    const tierPlayers =
+                        group.querySelector(
+                            ".tier-players"
+                        );
 
 
-                    const newUrl =
-                        "rankings.html?category=" +
-                        encodeURIComponent(category);
+                    if (
+                        !tierLabel ||
+                        !tierPlayers
+                    ) {
+                        return;
+                    }
 
-                    window.history.replaceState(
-                        {},
-                        "",
-                        newUrl
-                    );
-                }
-            );
-        });
-    }
 
-});
+                    const tierName =
+                        tierLabel.textContent.trim();
+
+
+                    const playersInTier =
+                        players.filter(
+                            function (player) {
+
+                                return (
+                                    player.tier ===
+                                    tierName
+                                );
+                            }
+                        )
