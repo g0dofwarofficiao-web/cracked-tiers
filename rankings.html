@@ -4,169 +4,130 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rankings | Cracked Tiers</title>
     <link rel="stylesheet" href="style.css">
-</head><body><!-- Navigation -->
-<header class="navbar">
+</head><body><!-- Navigation --><header class="navbar">
     <a href="index.html" class="brand">
         <span class="brand-icon">⚔</span>
         <span>CRACKED TIERS</span>
-    </a>
+    </a><nav class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="#leaderboard">Rankings</a>
+    <a href="#tiers">Tiers</a>
+</nav>
 
-    <nav class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="#leaderboard">Rankings</a>
-        <a href="#tiers">Tiers</a>
-    </nav>
-</header>
+</header><main class="rankings-page"><!-- Page Header -->
+<section class="rankings-hero">
+    <p class="eyebrow">CRACKED TIERS</p>
+    <h1>PVP RANKINGS</h1>
+    <p>Explore the best Minecraft PvP players across every category.</p>
+</section>
 
-<main class="rankings-page">
+<!-- Category Selector -->
+<section class="ranking-container">
 
-    <!-- Page Header -->
-    <section class="rankings-hero">
-        <p class="eyebrow">CRACKED TIERS</p>
-        <h1>PVP RANKINGS</h1>
-        <p>Explore the best Minecraft PvP players across every category.</p>
-    </section>
+    <div class="category-tabs">
+        <button class="category-tab active" data-category="Sword">Sword</button>
+        <button class="category-tab" data-category="Axe">Axe</button>
+        <button class="category-tab" data-category="Crystal">Crystal</button>
+        <button class="category-tab" data-category="Mace">Mace</button>
+        <button class="category-tab" data-category="SMP">SMP</button>
+        <button class="category-tab" data-category="Netherite Pot">Netherite Pot</button>
+        <button class="category-tab" data-category="Diamond Pot">Diamond Pot</button>
+    </div>
 
-    <!-- Category Selector -->
-    <section class="ranking-container">
-        <div class="category-tabs">
-            <button class="category-tab active" data-category="Sword">Sword</button>
-            <button class="category-tab" data-category="Axe">Axe</button>
-            <button class="category-tab" data-category="Crystal">Crystal</button>
-            <button class="category-tab" data-category="Mace">Mace</button>
-            <button class="category-tab" data-category="SMP">SMP</button>
-            <button class="category-tab" data-category="Netherite Pot">Netherite Pot</button>
-            <button class="category-tab" data-category="Diamond Pot">Diamond Pot</button>
+    <!-- Leaderboard -->
+    <section id="leaderboard" class="ranking-block">
+
+        <div class="ranking-title">
+            <div>
+                <p class="eyebrow">LEADERBOARD</p>
+                <h2 id="categoryTitle">SWORD RANKINGS</h2>
+            </div>
+
+            <span class="live-badge" id="liveBadge">● LIVE RANKINGS</span>
         </div>
 
-        <!-- Leaderboard -->
-        <section id="leaderboard" class="ranking-block">
-            <div class="ranking-title">
-                <div>
-                    <p class="eyebrow">LEADERBOARD</p>
-                    <h2 id="categoryTitle">SWORD RANKINGS</h2>
-                </div>
-                <span class="live-badge">● SAMPLE DATA</span>
+        <div class="ranking-table">
+
+            <!-- Table Header -->
+            <div class="ranking-table-row table-header">
+                <span>#</span>
+                <span>PLAYER</span>
+                <span>TIER</span>
             </div>
 
-            <div class="ranking-table">
-                <div class="ranking-table-row table-header">
-                    <span>#</span>
-                    <span>PLAYER</span>
-                    <span>TIER</span>
-                </div>
+            <!-- Real players are loaded here by script.js -->
 
-                <div class="ranking-table-row">
-                    <span class="position">1</span>
-                    <span class="player-name">Coming Soon</span>
-                    <span class="tier-badge">HT1</span>
-                </div>
-
-                <div class="ranking-table-row">
-                    <span class="position">2</span>
-                    <span class="player-name">Coming Soon</span>
-                    <span class="tier-badge">LT1</span>
-                </div>
-
-                <div class="ranking-table-row">
-                    <span class="position">3</span>
-                    <span class="player-name">Coming Soon</span>
-                    <span class="tier-badge">HT2</span>
-                </div>
-            </div>
-        </section>
-
-        <!-- Tier List -->
-        <section id="tiers" class="ranking-block">
-            <div class="ranking-title">
-                <div>
-                    <p class="eyebrow">FULL PLAYER LIST</p>
-                    <h2 id="tierListTitle">SWORD TIERS</h2>
-                </div>
-            </div>
-
-            <div class="tier-list">
-
-                <div class="tier-group tier-ht1">
-                    <div class="tier-label">HT1</div>
-                    <div class="tier-players">
-                        <span>Top players will appear here</span>
-                    </div>
-                </div>
-
-                <div class="tier-group">
-                    <div class="tier-label">LT1</div>
-                    <div class="tier-players">
-                        <span>Players coming soon</span>
-                    </div>
-                </div>
-
-                <div class="tier-group">
-                    <div class="tier-label">HT2</div>
-                    <div class="tier-players">
-                        <span>Players coming soon</span>
-                    </div>
-                </div>
-
-                <div class="tier-group">
-                    <div class="tier-label">LT2</div>
-                    <div class="tier-players">
-                        <span>Players coming soon</span>
-                    </div>
-                </div>
-
-                <div class="tier-group">
-                    <div class="tier-label">HT3</div>
-                    <div class="tier-players">
-                        <span>Players coming soon</span>
-                    </div>
-                </div>
-
-                <div class="tier-group">
-                    <div class="tier-label">LT3</div>
-                    <div class="tier-players">
-                        <span>Players coming soon</span>
-                    </div>
-                </div>
-
-                <div class="tier-group">
-                    <div class="tier-label">HT4</div>
-                    <div class="tier-players">
-                        <span>Players coming soon</span>
-                    </div>
-                </div>
-
-                <div class="tier-group">
-                    <div class="tier-label">LT4</div>
-                    <div class="tier-players">
-                        <span>Players coming soon</span>
-                    </div>
-                </div>
-
-                <div class="tier-group">
-                    <div class="tier-label">HT5</div>
-                    <div class="tier-players">
-                        <span>Players coming soon</span>
-                    </div>
-                </div>
-
-                <div class="tier-group">
-                    <div class="tier-label">LT5</div>
-                    <div class="tier-players">
-                        <span>Players coming soon</span>
-                    </div>
-                </div>
-
-            </div>
-        </section>
+        </div>
     </section>
-</main>
 
-<footer>
+    <!-- Tier List -->
+    <section id="tiers" class="ranking-block">
+
+        <div class="ranking-title">
+            <div>
+                <p class="eyebrow">FULL PLAYER LIST</p>
+                <h2 id="tierListTitle">SWORD TIERS</h2>
+            </div>
+        </div>
+
+        <div class="tier-list">
+
+            <div class="tier-group tier-ht1">
+                <div class="tier-label">HT1</div>
+                <div class="tier-players"></div>
+            </div>
+
+            <div class="tier-group">
+                <div class="tier-label">LT1</div>
+                <div class="tier-players"></div>
+            </div>
+
+            <div class="tier-group">
+                <div class="tier-label">HT2</div>
+                <div class="tier-players"></div>
+            </div>
+
+            <div class="tier-group">
+                <div class="tier-label">LT2</div>
+                <div class="tier-players"></div>
+            </div>
+
+            <div class="tier-group">
+                <div class="tier-label">HT3</div>
+                <div class="tier-players"></div>
+            </div>
+
+            <div class="tier-group">
+                <div class="tier-label">LT3</div>
+                <div class="tier-players"></div>
+            </div>
+
+            <div class="tier-group">
+                <div class="tier-label">HT4</div>
+                <div class="tier-players"></div>
+            </div>
+
+            <div class="tier-group">
+                <div class="tier-label">LT4</div>
+                <div class="tier-players"></div>
+            </div>
+
+            <div class="tier-group">
+                <div class="tier-label">HT5</div>
+                <div class="tier-players"></div>
+            </div>
+
+            <div class="tier-group">
+                <div class="tier-label">LT5</div>
+                <div class="tier-players"></div>
+            </div>
+
+        </div>
+    </section>
+
+</section>
+
+</main><footer>
     <p>© 2026 Cracked Tiers. Minecraft PvP Rankings.</p>
-</footer>
-
-<script src="script.js"></script>
-
-</body>
+</footer><script src="script.js"></script></body>
 </html>
