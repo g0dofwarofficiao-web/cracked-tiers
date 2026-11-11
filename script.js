@@ -35,9 +35,147 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     // ==========================================
+    // PLAYER SEARCH SYSTEM
+    // ==========================================
+    const searchInput =
+        document.getElementById("playerSearch");
+
+    const searchButton =
+        document.getElementById("searchButton");
+
+    const searchResults =
+        document.getElementById("searchResults");
+
+
+    if (searchInput && searchButton && searchResults) {
+
+        async function searchPlayer() {
+
+            const playerName =
+                searchInput.value.trim();
+
+            // Don't search an empty name
+            if (playerName === "") {
+
+                searchResults.innerHTML = `
+                    <div class="search-message">
+                        Enter a Minecraft username.
+                    </div>
+                `;
+
+                return;
+            }
+
+
+            // Show loading message
+            searchResults.innerHTML = `
+                <div class="search-message">
+                    Searching...
+                </div>
+            `;
+
+
+            try {
+
+                // Search database for the player
+                const players =
+                    await fetchRankings(
+                        "&player_name=ilike." +
+                        encodeURIComponent(playerName)
+                    );
+
+
+                // Player not found
+                if (players.length === 0) {
+
+                    searchResults.innerHTML = `
+                        <div class="search-message not-found">
+                            Player <strong>${playerName}</strong>
+                            is not ranked yet.
+                        </div>
+                    `;
+
+                    return;
+                }
+
+
+                // Show all rankings for the player
+                const rankingsHTML =
+                    players
+                        .map(function (player) {
+
+                            return `
+                                <div class="search-ranking">
+                                    <span class="search-category">
+                                        ${player.category}
+                                    </span>
+
+                                    <span class="search-tier">
+                                        ${player.tier}
+                                    </span>
+                                </div>
+                            `;
+                        })
+                        .join("");
+
+
+                searchResults.innerHTML = `
+                    <div class="player-result">
+
+                        <div class="player-result-name">
+                            ${players[0].player_name}
+                        </div>
+
+                        <div class="player-rankings">
+                            ${rankingsHTML}
+                        </div>
+
+                    </div>
+                `;
+
+
+            } catch (error) {
+
+                console.error(
+                    "Player search error:",
+                    error
+                );
+
+                searchResults.innerHTML = `
+                    <div class="search-message not-found">
+                        Unable to search right now.
+                        Please try again.
+                    </div>
+                `;
+            }
+        }
+
+
+        // Search button click
+        searchButton.addEventListener(
+            "click",
+            searchPlayer
+        );
+
+
+        // Search when Enter is pressed
+        searchInput.addEventListener(
+            "keydown",
+            function (event) {
+
+                if (event.key === "Enter") {
+                    searchPlayer();
+                }
+            }
+        );
+    }
+
+
+    // ==========================================
     // HOME PAGE — LIVE TOP PLAYERS
     // ==========================================
-    const homeLeaderboard = document.querySelector(".leaderboard");
+    const homeLeaderboard =
+        document.querySelector(".leaderboard");
 
     if (homeLeaderboard) {
 
@@ -45,55 +183,76 @@ document.addEventListener("DOMContentLoaded", function () {
 
             try {
 
-                // Get all players from the database
-                const players = await fetchRankings("");
+                const players =
+                    await fetchRankings("");
 
-                // Remove old placeholder rows but keep header
-                const oldRows = homeLeaderboard.querySelectorAll(
-                    ".leaderboard-row:not(.header-row)"
-                );
+                const oldRows =
+                    homeLeaderboard.querySelectorAll(
+                        ".leaderboard-row:not(.header-row)"
+                    );
 
                 oldRows.forEach(function (row) {
                     row.remove();
                 });
 
 
-                // Show message if database is empty
                 if (players.length === 0) {
 
-                    const emptyRow = document.createElement("div");
-                    emptyRow.className = "leaderboard-row";
+                    const emptyRow =
+                        document.createElement("div");
+
+                    emptyRow.className =
+                        "leaderboard-row";
 
                     emptyRow.innerHTML = `
                         <span class="rank">-</span>
-                        <span class="player">No players ranked yet</span>
+                        <span class="player">
+                            No players ranked yet
+                        </span>
                         <span class="tier">-</span>
                     `;
 
-                    homeLeaderboard.appendChild(emptyRow);
+                    homeLeaderboard.appendChild(
+                        emptyRow
+                    );
+
                     return;
                 }
 
 
-                // Show maximum 3 players
-                players.slice(0, 3).forEach(function (player, index) {
+                players.slice(0, 3).forEach(
+                    function (player, index) {
 
-                    const row = document.createElement("div");
-                    row.className = "leaderboard-row";
+                        const row =
+                            document.createElement("div");
 
-                    row.innerHTML = `
-                        <span class="rank">#${index + 1}</span>
-                        <span class="player">${player.player_name}</span>
-                        <span class="tier">${player.tier}</span>
-                    `;
+                        row.className =
+                            "leaderboard-row";
 
-                    homeLeaderboard.appendChild(row);
-                });
+                        row.innerHTML = `
+                            <span class="rank">
+                                #${index + 1}
+                            </span>
+
+                            <span class="player">
+                                ${player.player_name}
+                            </span>
+
+                            <span class="tier">
+                                ${player.tier}
+                            </span>
+                        `;
+
+                        homeLeaderboard.appendChild(row);
+                    }
+                );
 
             } catch (error) {
 
-                console.error("Home ranking loading error:", error);
-
+                console.error(
+                    "Home ranking loading error:",
+                    error
+                );
             }
         }
 
@@ -120,28 +279,26 @@ document.addEventListener("DOMContentLoaded", function () {
         document.querySelectorAll(".tier-group");
 
 
-    // Only run this section on rankings.html
     if (categoryButtons.length > 0 && rankingTable) {
 
-        // Get category from URL
         const urlParams =
-            new URLSearchParams(window.location.search);
+            new URLSearchParams(
+                window.location.search
+            );
 
         const selectedCategory =
             urlParams.get("category") || "Sword";
 
 
-        // ==========================================
-        // LOAD CATEGORY RANKINGS
-        // ==========================================
         async function loadRankings(category) {
 
             try {
 
-                const players = await fetchRankings(
-                    "&category=eq." +
-                    encodeURIComponent(category)
-                );
+                const players =
+                    await fetchRankings(
+                        "&category=eq." +
+                        encodeURIComponent(category)
+                    );
 
                 displayLeaderboard(players);
                 displayTierList(players);
@@ -158,9 +315,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
 
-        // ==========================================
-        // DISPLAY LEADERBOARD
-        // ==========================================
         function displayLeaderboard(players) {
 
             const oldRows =
@@ -190,38 +344,40 @@ document.addEventListener("DOMContentLoaded", function () {
                 `;
 
                 rankingTable.appendChild(emptyRow);
+
                 return;
             }
 
 
-            players.forEach(function (player, index) {
+            players.forEach(
+                function (player, index) {
 
-                const row =
-                    document.createElement("div");
+                    const row =
+                        document.createElement("div");
 
-                row.className =
-                    "ranking-table-row";
+                    row.className =
+                        "ranking-table-row";
 
-                row.innerHTML = `
-                    <span class="position">
-                        ${index + 1}
-                    </span>
-                    <span class="player-name">
-                        ${player.player_name}
-                    </span>
-                    <span class="tier-badge">
-                        ${player.tier}
-                    </span>
-                `;
+                    row.innerHTML = `
+                        <span class="position">
+                            ${index + 1}
+                        </span>
 
-                rankingTable.appendChild(row);
-            });
+                        <span class="player-name">
+                            ${player.player_name}
+                        </span>
+
+                        <span class="tier-badge">
+                            ${player.tier}
+                        </span>
+                    `;
+
+                    rankingTable.appendChild(row);
+                }
+            );
         }
 
 
-        // ==========================================
-        // DISPLAY TIER LIST
-        // ==========================================
         function displayTierList(players) {
 
             tierGroups.forEach(function (group) {
@@ -230,9 +386,13 @@ document.addEventListener("DOMContentLoaded", function () {
                     group.querySelector(".tier-label");
 
                 const tierPlayers =
-                    group.querySelector(".tier-players");
+                    group.querySelector(
+                        ".tier-players"
+                    );
 
-                if (!tierLabel || !tierPlayers) return;
+                if (!tierLabel || !tierPlayers) {
+                    return;
+                }
 
                 const tierName =
                     tierLabel.textContent.trim();
@@ -253,7 +413,13 @@ document.addEventListener("DOMContentLoaded", function () {
                     tierPlayers.innerHTML =
                         playersInTier
                             .map(function (player) {
-                                return `<span>${player.player_name}</span>`;
+
+                                return `
+                                    <span>
+                                        ${player.player_name}
+                                    </span>
+                                `;
+
                             })
                             .join("");
                 }
@@ -261,9 +427,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
 
-        // ==========================================
-        // SHOW ERROR
-        // ==========================================
         function showRankingError() {
 
             const oldRows =
@@ -275,6 +438,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 row.remove();
             });
 
+
             const errorRow =
                 document.createElement("div");
 
@@ -283,9 +447,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
             errorRow.innerHTML = `
                 <span>!</span>
+
                 <span class="player-name">
                     Unable to load rankings
                 </span>
+
                 <span>!</span>
             `;
 
@@ -293,9 +459,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
 
-        // ==========================================
-        // SELECT CATEGORY
-        // ==========================================
         function selectCategory(category) {
 
             categoryButtons.forEach(function (button) {
@@ -314,12 +477,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
             if (categoryTitle) {
+
                 categoryTitle.textContent =
                     category.toUpperCase() +
                     " RANKINGS";
             }
 
+
             if (tierListTitle) {
+
                 tierListTitle.textContent =
                     category.toUpperCase() +
                     " TIERS";
@@ -330,13 +496,10 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
 
-        // Load first category
+        // Load category from URL
         selectCategory(selectedCategory);
 
 
-        // ==========================================
-        // CATEGORY BUTTON CLICKS
-        // ==========================================
         categoryButtons.forEach(function (button) {
 
             button.addEventListener(
@@ -350,7 +513,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     selectCategory(category);
 
-                    // Update URL without refresh
+
                     const newUrl =
                         "rankings.html?category=" +
                         encodeURIComponent(category);
