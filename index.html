@@ -1,167 +1,255 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Cracked Tiers | Minecraft PvP Rankings</title>
-<meta name="description" content="View Minecraft PvP player rankings and tiers on Cracked Tiers.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="stylesheet" href="style.css">
+    <title>Cracked Tiers | Minecraft PvP Rankings</title>
 
-</head><body><!-- Navigation -->
-<header class="navbar">
-    <a href="index.html" class="brand">
-        <span class="brand-icon">⚔</span>
-        <span>CRACKED TIERS</span>
-    </a>
+    <meta
+        name="description"
+        content="View Minecraft PvP player rankings and tiers on Cracked Tiers."
+    >
 
-    <nav class="nav-links">
-        <a href="#categories">Categories</a>
-        <a href="rankings.html">Rankings</a>
-        <a href="#discord">Discord</a>
-    </nav>
-</header>
+    <link rel="stylesheet" href="style.css">
+</head>
 
-<main>
+<body>
 
-    <!-- Hero -->
-    <section class="hero">
-        <div class="hero-content">
-            <p class="eyebrow">MINECRAFT PVP RANKINGS</p>
+    <!-- Navigation -->
+    <header class="navbar">
+        <a href="index.html" class="brand">
+            <span class="brand-icon">⚔</span>
+            <span>CRACKED TIERS</span>
+        </a>
 
-            <h1>
-                PROVE YOUR <span>SKILL.</span><br>
-                CLAIM YOUR TIER.
-            </h1>
+        <nav class="nav-links">
+            <a href="#categories">Categories</a>
+            <a href="rankings.html">Rankings</a>
+            <a href="#discord">Discord</a>
+        </nav>
+    </header>
 
-            <p class="hero-text">
-                Explore competitive Minecraft PvP rankings for premium and cracked players.
-                Find your tier and discover the best players.
+
+    <main>
+
+        <!-- Hero -->
+        <section class="hero">
+            <div class="hero-content">
+
+                <p class="eyebrow">MINECRAFT PVP RANKINGS</p>
+
+                <h1>
+                    PROVE YOUR <span>SKILL.</span><br>
+                    CLAIM YOUR TIER.
+                </h1>
+
+                <p class="hero-text">
+                    Explore competitive Minecraft PvP rankings for premium and cracked players.
+                    Find your tier and discover the best players.
+                </p>
+
+
+                <!-- Player Search -->
+                <div class="search-box">
+
+                    <input
+                        type="text"
+                        id="playerSearch"
+                        placeholder="Search a Minecraft player..."
+                        autocomplete="off"
+                    >
+
+                    <button id="searchButton">
+                        SEARCH
+                    </button>
+
+                </div>
+
+
+                <!-- Search Results -->
+                <div
+                    id="searchResults"
+                    class="search-results"
+                ></div>
+
+
+                <a
+                    href="#discord"
+                    class="primary-button"
+                >
+                    JOIN CRACKED TIERS
+                </a>
+
+            </div>
+        </section>
+
+
+        <!-- PvP Categories -->
+        <section
+            class="section"
+            id="categories"
+        >
+
+            <div class="section-heading">
+                <p class="eyebrow">
+                    CHOOSE YOUR FIGHT
+                </p>
+
+                <h2>PVP CATEGORIES</h2>
+            </div>
+
+
+            <div class="category-grid">
+
+                <a
+                    href="rankings.html?category=Sword"
+                    class="category-card"
+                >
+                    <span>⚔️</span>
+                    <h3>Sword</h3>
+                </a>
+
+                <a
+                    href="rankings.html?category=Axe"
+                    class="category-card"
+                >
+                    <span>🪓</span>
+                    <h3>Axe</h3>
+                </a>
+
+                <a
+                    href="rankings.html?category=Crystal"
+                    class="category-card"
+                >
+                    <span>💎</span>
+                    <h3>Crystal</h3>
+                </a>
+
+                <a
+                    href="rankings.html?category=Mace"
+                    class="category-card"
+                >
+                    <span>🔨</span>
+                    <h3>Mace</h3>
+                </a>
+
+                <a
+                    href="rankings.html?category=SMP"
+                    class="category-card"
+                >
+                    <span>🛡️</span>
+                    <h3>SMP</h3>
+                </a>
+
+                <a
+                    href="rankings.html?category=Netherite%20Pot"
+                    class="category-card"
+                >
+                    <span>⚗️</span>
+                    <h3>Netherite Pot</h3>
+                </a>
+
+                <a
+                    href="rankings.html?category=Diamond%20Pot"
+                    class="category-card"
+                >
+                    <span>⚗️</span>
+                    <h3>Diamond Pot</h3>
+                </a>
+
+            </div>
+        </section>
+
+
+        <!-- Rankings Preview -->
+        <section class="section rankings-section">
+
+            <div class="section-heading">
+
+                <p class="eyebrow">
+                    THE COMPETITION
+                </p>
+
+                <h2>TOP PLAYERS</h2>
+
+            </div>
+
+
+            <div class="leaderboard">
+
+                <div class="leaderboard-row header-row">
+                    <span>RANK</span>
+                    <span>PLAYER</span>
+                    <span>TIER</span>
+                </div>
+
+            </div>
+
+
+            <br>
+
+
+            <a
+                href="rankings.html"
+                class="primary-button"
+            >
+                VIEW ALL RANKINGS
+            </a>
+
+        </section>
+
+
+        <!-- Discord -->
+        <section
+            class="discord-section"
+            id="discord"
+        >
+
+            <p class="eyebrow">
+                READY TO COMPETE?
             </p>
 
-            <div class="search-box">
-                <input
-                    type="text"
-                    id="playerSearch"
-                    placeholder="Search a Minecraft player..."
-                    autocomplete="off"
-                >
-                <button id="searchButton">SEARCH</button>
-            </div>
+            <h2>
+                GET TESTED. GET RANKED.
+            </h2>
 
-            <a href="#discord" class="primary-button">JOIN CRACKED TIERS</a>
+            <p>
+                Join our Discord community and begin your journey through Cracked Tiers.
+            </p>
+
+            <a
+                href="#"
+                class="primary-button"
+            >
+                JOIN DISCORD
+            </a>
+
+        </section>
+
+    </main>
+
+
+    <!-- Footer -->
+    <footer>
+
+        <div class="brand">
+            <span class="brand-icon">⚔</span>
+            <span>CRACKED TIERS</span>
         </div>
-    </section>
-
-    <!-- PvP Categories -->
-    <section class="section" id="categories">
-        <div class="section-heading">
-            <p class="eyebrow">CHOOSE YOUR FIGHT</p>
-            <h2>PVP CATEGORIES</h2>
-        </div>
-
-        <div class="category-grid">
-
-            <a href="rankings.html?category=Sword" class="category-card">
-                <span>⚔️</span>
-                <h3>Sword</h3>
-            </a>
-
-            <a href="rankings.html?category=Axe" class="category-card">
-                <span>🪓</span>
-                <h3>Axe</h3>
-            </a>
-
-            <a href="rankings.html?category=Crystal" class="category-card">
-                <span>💎</span>
-                <h3>Crystal</h3>
-            </a>
-
-            <a href="rankings.html?category=Mace" class="category-card">
-                <span>🔨</span>
-                <h3>Mace</h3>
-            </a>
-
-            <a href="rankings.html?category=SMP" class="category-card">
-                <span>🛡️</span>
-                <h3>SMP</h3>
-            </a>
-
-            <a href="rankings.html?category=Netherite%20Pot" class="category-card">
-                <span>⚗️</span>
-                <h3>Netherite Pot</h3>
-            </a>
-
-            <a href="rankings.html?category=Diamond%20Pot" class="category-card">
-                <span>⚗️</span>
-                <h3>Diamond Pot</h3>
-            </a>
-
-        </div>
-    </section>
-
-    <!-- Rankings Preview -->
-    <section class="section rankings-section">
-        <div class="section-heading">
-            <p class="eyebrow">THE COMPETITION</p>
-            <h2>TOP PLAYERS</h2>
-        </div>
-
-        <div class="leaderboard">
-            <div class="leaderboard-row header-row">
-                <span>RANK</span>
-                <span>PLAYER</span>
-                <span>TIER</span>
-            </div>
-
-            <div class="leaderboard-row">
-                <span class="rank">#1</span>
-                <span class="player">Coming Soon</span>
-                <span class="tier">HT1</span>
-            </div>
-
-            <div class="leaderboard-row">
-                <span class="rank">#2</span>
-                <span class="player">Coming Soon</span>
-                <span class="tier">LT1</span>
-            </div>
-
-            <div class="leaderboard-row">
-                <span class="rank">#3</span>
-                <span class="player">Coming Soon</span>
-                <span class="tier">HT2</span>
-            </div>
-        </div>
-
-        <br>
-
-        <a href="rankings.html" class="primary-button">VIEW ALL RANKINGS</a>
-    </section>
-
-    <!-- Discord -->
-    <section class="discord-section" id="discord">
-        <p class="eyebrow">READY TO COMPETE?</p>
-        <h2>GET TESTED. GET RANKED.</h2>
 
         <p>
-            Join our Discord community and begin your journey through Cracked Tiers.
+            Unofficial Minecraft PvP ranking community.
         </p>
 
-        <a href="#" class="primary-button">JOIN DISCORD</a>
-    </section>
+        <p class="copyright">
+            © 2026 Cracked Tiers. All rights reserved.
+        </p>
 
-</main>
+    </footer>
 
-<!-- Footer -->
-<footer>
-    <div class="brand">
-        <span class="brand-icon">⚔</span>
-        <span>CRACKED TIERS</span>
-    </div>
 
-    <p>Unofficial Minecraft PvP ranking community.</p>
-    <p class="copyright">© 2026 Cracked Tiers. All rights reserved.</p>
-</footer>
-
-<script src="script.js"></script>
+    <script src="script.js"></script>
 
 </body>
 </html>
