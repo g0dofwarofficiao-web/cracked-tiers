@@ -1,282 +1,367 @@
-<!DOCTYPE html><html lang="en"><head>
-    <meta charset="UTF-8"><meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
+<!DOCTYPE html>
+<html lang="en">
 
-<title>Admin Dashboard | Cracked Tiers</title>
+<head>
+    <meta charset="UTF-8">
 
-<link rel="stylesheet" href="style.css">
-
-</head><body><!-- Navigation -->
-<header class="navbar">
-
-    <a href="index.html" class="brand">
-        <span class="brand-icon">⚔</span>
-        <span>CRACKED TIERS</span>
-    </a>
-
-    <nav class="nav-links">
-        <a href="index.html">View Site</a>
-        <button
-            id="logoutButton"
-            class="admin-nav-button"
-        >
-            Logout
-        </button>
-    </nav>
-
-</header>
-
-
-<main class="admin-page">
-
-
-    <!-- Loading / Security Check -->
-    <div
-        id="adminLoading"
-        class="admin-loading"
-    >
-        Checking admin access...
-    </div>
-
-
-    <!-- Dashboard -->
-    <div
-        id="adminDashboard"
-        style="display: none;"
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
     >
 
+    <title>Admin Dashboard | Cracked Tiers</title>
 
-        <!-- Header -->
-        <section class="admin-header">
+    <link rel="stylesheet" href="style.css">
+</head>
 
-            <div>
+<body>
 
-                <p class="eyebrow">
-                    STAFF CONTROL PANEL
-                </p>
+    <!-- Navigation -->
+    <header class="navbar">
 
-                <h1>
-                    ADMIN DASHBOARD
-                </h1>
+        <a href="index.html" class="brand">
+            <span class="brand-icon">⚔</span>
+            <span>CRACKED TIERS</span>
+        </a>
 
-                <p class="admin-login-text">
-                    Manage player rankings across
-                    Cracked Tiers.
-                </p>
+        <nav class="nav-links">
+            <a href="index.html">View Site</a>
 
-            </div>
-
-
-            <a
-                href="rankings.html"
-                class="primary-button"
+            <button
+                id="logoutButton"
+                class="admin-nav-button"
             >
-                VIEW LIVE RANKINGS
-            </a>
+                Logout
+            </button>
+        </nav>
 
-        </section>
+    </header>
 
 
-        <!-- Add Ranking -->
-        <section class="admin-panel">
+    <main class="admin-page">
 
-            <div class="admin-panel-title">
+        <!-- Loading / Security Check -->
+        <div
+            id="adminLoading"
+            class="admin-loading"
+        >
+            Checking admin access...
+        </div>
+
+
+        <!-- Dashboard -->
+        <div
+            id="adminDashboard"
+            style="display: none;"
+        >
+
+            <!-- Header -->
+            <section class="admin-header">
 
                 <div>
 
                     <p class="eyebrow">
-                        NEW ENTRY
+                        STAFF CONTROL PANEL
                     </p>
 
-                    <h2>
-                        ADD RANKING
-                    </h2>
+                    <h1>
+                        ADMIN DASHBOARD
+                    </h1>
 
-                </div>
-
-            </div>
-
-
-            <form
-                id="addRankingForm"
-                class="admin-ranking-form"
-            >
-
-                <div class="admin-form-group">
-
-                    <label for="playerName">
-                        MINECRAFT USERNAME
-                    </label>
-
-                    <input
-                        type="text"
-                        id="playerName"
-                        placeholder="Enter player username"
-                        required
-                    >
+                    <p class="admin-login-text">
+                        Manage player rankings across
+                        Cracked Tiers.
+                    </p>
 
                 </div>
 
 
-                <div class="admin-form-group">
-
-                    <label for="category">
-                        CATEGORY
-                    </label>
-
-                    <select
-                        id="category"
-                        required
-                    >
-                        <option value="">
-                            Select category
-                        </option>
-
-                        <option value="Sword">
-                            Sword
-                        </option>
-
-                        <option value="Axe">
-                            Axe
-                        </option>
-
-                        <option value="Crystal">
-                            Crystal
-                        </option>
-
-                        <option value="Mace">
-                            Mace
-                        </option>
-
-                        <option value="SMP">
-                            SMP
-                        </option>
-
-                        <option value="Netherite Pot">
-                            Netherite Pot
-                        </option>
-
-                        <option value="Diamond Pot">
-                            Diamond Pot
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-                <div class="admin-form-group">
-
-                    <label for="tier">
-                        TIER
-                    </label>
-
-                    <select
-                        id="tier"
-                        required
-                    >
-                        <option value="">
-                            Select tier
-                        </option>
-
-                        <option value="HT1">
-                            HT1
-                        </option>
-
-                        <option value="LT1">
-                            LT1
-                        </option>
-
-                        <option value="HT2">
-                            HT2
-                        </option>
-
-                        <option value="LT2">
-                            LT2
-                        </option>
-
-                        <option value="HT3">
-                            HT3
-                        </option>
-
-                        <option value="LT3">
-                            LT3
-                        </option>
-
-                        <option value="HT4">
-                            HT4
-                        </option>
-
-                        <option value="LT4">
-                            LT4
-                        </option>
-
-                        <option value="HT5">
-                            HT5
-                        </option>
-
-                        <option value="LT5">
-                            LT5
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-                <button
-                    type="submit"
+                <a
+                    href="rankings.html"
                     class="primary-button"
                 >
-                    ADD RANKING
-                </button>
+                    VIEW LIVE RANKINGS
+                </a>
 
-            </form>
-
-
-            <div
-                id="adminMessage"
-                class="admin-message"
-            ></div>
-
-        </section>
+            </section>
 
 
-        <!-- Manage Rankings -->
-        <section class="admin-panel">
+            <!-- Add Ranking -->
+            <section class="admin-panel">
 
-            <div class="admin-panel-title">
+                <div class="admin-panel-title">
 
-                <div>
+                    <div>
 
-                    <p class="eyebrow">
-                        DATABASE
-                    </p>
+                        <p class="eyebrow">
+                            NEW ENTRY
+                        </p>
 
-                    <h2>
-                        MANAGE RANKINGS
-                    </h2>
+                        <h2>
+                            ADD RANKING
+                        </h2>
+
+                    </div>
 
                 </div>
 
-            </div>
+
+                <form
+                    id="addRankingForm"
+                    class="admin-ranking-form"
+                >
+
+                    <div class="admin-form-group">
+
+                        <label for="playerName">
+                            MINECRAFT USERNAME
+                        </label>
+
+                        <input
+                            type="text"
+                            id="playerName"
+                            placeholder="Enter player username"
+                            required
+                        >
+
+                    </div>
 
 
-            <div
-                id="adminRankingsList"
-                class="admin-rankings-list"
+                    <div class="admin-form-group">
+
+                        <label for="category">
+                            CATEGORY
+                        </label>
+
+                        <select
+                            id="category"
+                            required
+                        >
+                            <option value="">
+                                Select category
+                            </option>
+
+                            <option value="Sword">Sword</option>
+                            <option value="Axe">Axe</option>
+                            <option value="Crystal">Crystal</option>
+                            <option value="Mace">Mace</option>
+                            <option value="SMP">SMP</option>
+                            <option value="Netherite Pot">
+                                Netherite Pot
+                            </option>
+                            <option value="Diamond Pot">
+                                Diamond Pot
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="admin-form-group">
+
+                        <label for="tier">
+                            TIER
+                        </label>
+
+                        <select
+                            id="tier"
+                            required
+                        >
+                            <option value="">
+                                Select tier
+                            </option>
+
+                            <option value="HT1">HT1</option>
+                            <option value="LT1">LT1</option>
+                            <option value="HT2">HT2</option>
+                            <option value="LT2">LT2</option>
+                            <option value="HT3">HT3</option>
+                            <option value="LT3">LT3</option>
+                            <option value="HT4">HT4</option>
+                            <option value="LT4">LT4</option>
+                            <option value="HT5">HT5</option>
+                            <option value="LT5">LT5</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="primary-button"
+                    >
+                        ADD RANKING
+                    </button>
+
+                </form>
+
+
+                <div
+                    id="adminMessage"
+                    class="admin-message"
+                ></div>
+
+            </section>
+
+
+            <!-- Edit Ranking -->
+            <section
+                id="editPanel"
+                class="admin-panel"
+                style="display: none;"
             >
-                Loading rankings...
-            </div>
 
-        </section>
+                <div class="admin-panel-title">
+
+                    <div>
+
+                        <p class="eyebrow">
+                            EDIT ENTRY
+                        </p>
+
+                        <h2>
+                            EDIT RANKING
+                        </h2>
+
+                    </div>
+
+                </div>
 
 
-    </div>
+                <form
+                    id="editRankingForm"
+                    class="admin-ranking-form"
+                >
 
-</main>
+                    <input
+                        type="hidden"
+                        id="editRankingId"
+                    >
+
+
+                    <div class="admin-form-group">
+
+                        <label for="editPlayerName">
+                            MINECRAFT USERNAME
+                        </label>
+
+                        <input
+                            type="text"
+                            id="editPlayerName"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="admin-form-group">
+
+                        <label for="editCategory">
+                            CATEGORY
+                        </label>
+
+                        <select
+                            id="editCategory"
+                            required
+                        >
+                            <option value="Sword">Sword</option>
+                            <option value="Axe">Axe</option>
+                            <option value="Crystal">Crystal</option>
+                            <option value="Mace">Mace</option>
+                            <option value="SMP">SMP</option>
+                            <option value="Netherite Pot">
+                                Netherite Pot
+                            </option>
+                            <option value="Diamond Pot">
+                                Diamond Pot
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="admin-form-group">
+
+                        <label for="editTier">
+                            TIER
+                        </label>
+
+                        <select
+                            id="editTier"
+                            required
+                        >
+                            <option value="HT1">HT1</option>
+                            <option value="LT1">LT1</option>
+                            <option value="HT2">HT2</option>
+                            <option value="LT2">LT2</option>
+                            <option value="HT3">HT3</option>
+                            <option value="LT3">LT3</option>
+                            <option value="HT4">HT4</option>
+                            <option value="LT4">LT4</option>
+                            <option value="HT5">HT5</option>
+                            <option value="LT5">LT5</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="primary-button"
+                    >
+                        SAVE CHANGES
+                    </button>
+
+
+                    <button
+                        type="button"
+                        id="cancelEditButton"
+                        class="admin-cancel-button"
+                    >
+                        CANCEL
+                    </button>
+
+                </form>
+
+            </section>
+
+
+            <!-- Manage Rankings -->
+            <section class="admin-panel">
+
+                <div class="admin-panel-title">
+
+                    <div>
+
+                        <p class="eyebrow">
+                            DATABASE
+                        </p>
+
+                        <h2>
+                            MANAGE RANKINGS
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="adminRankingsList"
+                    class="admin-rankings-list"
+                >
+                    Loading rankings...
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
 
 
 <script>
@@ -332,19 +417,13 @@
             } else {
 
                 document
-                    .getElementById(
-                        "adminLoading"
-                    )
-                    .style.display =
-                    "none";
+                    .getElementById("adminLoading")
+                    .style.display = "none";
 
 
                 document
-                    .getElementById(
-                        "adminDashboard"
-                    )
-                    .style.display =
-                    "block";
+                    .getElementById("adminDashboard")
+                    .style.display = "block";
 
             }
 
@@ -397,9 +476,7 @@
                     "&order=player_name.asc",
                     {
                         headers: {
-                            "apikey":
-                                SUPABASE_KEY,
-
+                            "apikey": SUPABASE_KEY,
                             "Authorization":
                                 "Bearer " +
                                 getAccessToken()
@@ -455,6 +532,17 @@
                                     <div class="admin-row-actions">
 
                                         <button
+                                            class="admin-edit-button"
+                                            data-id="${player.id}"
+                                            data-name="${player.player_name}"
+                                            data-category="${player.category}"
+                                            data-tier="${player.tier}"
+                                        >
+                                            EDIT
+                                        </button>
+
+
+                                        <button
                                             class="admin-delete-button"
                                             data-id="${player.id}"
                                         >
@@ -471,6 +559,7 @@
 
 
             addDeleteListeners();
+            addEditListeners();
 
 
         } catch (error) {
@@ -504,24 +593,18 @@
 
             const playerName =
                 document
-                    .getElementById(
-                        "playerName"
-                    )
+                    .getElementById("playerName")
                     .value
                     .trim();
 
             const category =
                 document
-                    .getElementById(
-                        "category"
-                    )
+                    .getElementById("category")
                     .value;
 
             const tier =
                 document
-                    .getElementById(
-                        "tier"
-                    )
+                    .getElementById("tier")
                     .value;
 
 
@@ -545,8 +628,7 @@
                             method: "POST",
 
                             headers: {
-                                "apikey":
-                                    SUPABASE_KEY,
+                                "apikey": SUPABASE_KEY,
 
                                 "Authorization":
                                     "Bearer " +
@@ -613,6 +695,193 @@
 
 
     // ==========================================
+    // EDIT BUTTONS
+    // ==========================================
+    function addEditListeners() {
+
+        const editButtons =
+            document.querySelectorAll(
+                ".admin-edit-button"
+            );
+
+
+        editButtons.forEach(
+            function (button) {
+
+                button.addEventListener(
+                    "click",
+                    function () {
+
+                        document
+                            .getElementById("editRankingId")
+                            .value =
+                            button.dataset.id;
+
+                        document
+                            .getElementById("editPlayerName")
+                            .value =
+                            button.dataset.name;
+
+                        document
+                            .getElementById("editCategory")
+                            .value =
+                            button.dataset.category;
+
+                        document
+                            .getElementById("editTier")
+                            .value =
+                            button.dataset.tier;
+
+
+                        document
+                            .getElementById("editPanel")
+                            .style.display =
+                            "block";
+
+
+                        document
+                            .getElementById("editPanel")
+                            .scrollIntoView({
+                                behavior: "smooth"
+                            });
+                    }
+                );
+            }
+        );
+    }
+
+
+    // ==========================================
+    // SAVE EDITED RANKING
+    // ==========================================
+    document
+        .getElementById("editRankingForm")
+        .addEventListener(
+            "submit",
+            async function (event) {
+
+                event.preventDefault();
+
+
+                const rankingId =
+                    document
+                        .getElementById("editRankingId")
+                        .value;
+
+                const playerName =
+                    document
+                        .getElementById("editPlayerName")
+                        .value
+                        .trim();
+
+                const category =
+                    document
+                        .getElementById("editCategory")
+                        .value;
+
+                const tier =
+                    document
+                        .getElementById("editTier")
+                        .value;
+
+
+                try {
+
+                    const response =
+                        await fetch(
+                            SUPABASE_URL +
+                            "/rest/v1/rankings?id=eq." +
+                            encodeURIComponent(
+                                rankingId
+                            ),
+                            {
+                                method: "PATCH",
+
+                                headers: {
+                                    "apikey":
+                                        SUPABASE_KEY,
+
+                                    "Authorization":
+                                        "Bearer " +
+                                        getAccessToken(),
+
+                                    "Content-Type":
+                                        "application/json"
+                                },
+
+                                body: JSON.stringify({
+                                    player_name:
+                                        playerName,
+
+                                    category:
+                                        category,
+
+                                    tier:
+                                        tier
+                                })
+                            }
+                        );
+
+
+                    if (!response.ok) {
+
+                        const errorData =
+                            await response.json();
+
+                        throw new Error(
+                            errorData.message ||
+                            "Unable to update ranking"
+                        );
+                    }
+
+
+                    document
+                        .getElementById("editPanel")
+                        .style.display =
+                        "none";
+
+
+                    alert(
+                        "Ranking updated successfully!"
+                    );
+
+
+                    loadAdminRankings();
+
+
+                } catch (error) {
+
+                    console.error(
+                        "Edit error:",
+                        error
+                    );
+
+                    alert(
+                        error.message
+                    );
+                }
+            }
+        );
+
+
+    // ==========================================
+    // CANCEL EDIT
+    // ==========================================
+    document
+        .getElementById("cancelEditButton")
+        .addEventListener(
+            "click",
+            function () {
+
+                document
+                    .getElementById("editPanel")
+                    .style.display =
+                    "none";
+            }
+        );
+
+
+    // ==========================================
     // DELETE RANKING
     // ==========================================
     function addDeleteListeners() {
@@ -673,9 +942,7 @@
                                 );
 
 
-                            if (
-                                !response.ok
-                            ) {
+                            if (!response.ok) {
 
                                 throw new Error(
                                     "Unable to delete ranking"
@@ -708,9 +975,7 @@
     // LOGOUT
     // ==========================================
     document
-        .getElementById(
-            "logoutButton"
-        )
+        .getElementById("logoutButton")
         .addEventListener(
             "click",
             function () {
