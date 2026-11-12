@@ -1,0 +1,737 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8"><meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Admin Dashboard | Cracked Tiers</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head><body><!-- Navigation -->
+<header class="navbar">
+
+    <a href="index.html" class="brand">
+        <span class="brand-icon">⚔</span>
+        <span>CRACKED TIERS</span>
+    </a>
+
+    <nav class="nav-links">
+        <a href="index.html">View Site</a>
+        <button
+            id="logoutButton"
+            class="admin-nav-button"
+        >
+            Logout
+        </button>
+    </nav>
+
+</header>
+
+
+<main class="admin-page">
+
+
+    <!-- Loading / Security Check -->
+    <div
+        id="adminLoading"
+        class="admin-loading"
+    >
+        Checking admin access...
+    </div>
+
+
+    <!-- Dashboard -->
+    <div
+        id="adminDashboard"
+        style="display: none;"
+    >
+
+
+        <!-- Header -->
+        <section class="admin-header">
+
+            <div>
+
+                <p class="eyebrow">
+                    STAFF CONTROL PANEL
+                </p>
+
+                <h1>
+                    ADMIN DASHBOARD
+                </h1>
+
+                <p class="admin-login-text">
+                    Manage player rankings across
+                    Cracked Tiers.
+                </p>
+
+            </div>
+
+
+            <a
+                href="rankings.html"
+                class="primary-button"
+            >
+                VIEW LIVE RANKINGS
+            </a>
+
+        </section>
+
+
+        <!-- Add Ranking -->
+        <section class="admin-panel">
+
+            <div class="admin-panel-title">
+
+                <div>
+
+                    <p class="eyebrow">
+                        NEW ENTRY
+                    </p>
+
+                    <h2>
+                        ADD RANKING
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <form
+                id="addRankingForm"
+                class="admin-ranking-form"
+            >
+
+                <div class="admin-form-group">
+
+                    <label for="playerName">
+                        MINECRAFT USERNAME
+                    </label>
+
+                    <input
+                        type="text"
+                        id="playerName"
+                        placeholder="Enter player username"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="admin-form-group">
+
+                    <label for="category">
+                        CATEGORY
+                    </label>
+
+                    <select
+                        id="category"
+                        required
+                    >
+                        <option value="">
+                            Select category
+                        </option>
+
+                        <option value="Sword">
+                            Sword
+                        </option>
+
+                        <option value="Axe">
+                            Axe
+                        </option>
+
+                        <option value="Crystal">
+                            Crystal
+                        </option>
+
+                        <option value="Mace">
+                            Mace
+                        </option>
+
+                        <option value="SMP">
+                            SMP
+                        </option>
+
+                        <option value="Netherite Pot">
+                            Netherite Pot
+                        </option>
+
+                        <option value="Diamond Pot">
+                            Diamond Pot
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="admin-form-group">
+
+                    <label for="tier">
+                        TIER
+                    </label>
+
+                    <select
+                        id="tier"
+                        required
+                    >
+                        <option value="">
+                            Select tier
+                        </option>
+
+                        <option value="HT1">
+                            HT1
+                        </option>
+
+                        <option value="LT1">
+                            LT1
+                        </option>
+
+                        <option value="HT2">
+                            HT2
+                        </option>
+
+                        <option value="LT2">
+                            LT2
+                        </option>
+
+                        <option value="HT3">
+                            HT3
+                        </option>
+
+                        <option value="LT3">
+                            LT3
+                        </option>
+
+                        <option value="HT4">
+                            HT4
+                        </option>
+
+                        <option value="LT4">
+                            LT4
+                        </option>
+
+                        <option value="HT5">
+                            HT5
+                        </option>
+
+                        <option value="LT5">
+                            LT5
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="primary-button"
+                >
+                    ADD RANKING
+                </button>
+
+            </form>
+
+
+            <div
+                id="adminMessage"
+                class="admin-message"
+            ></div>
+
+        </section>
+
+
+        <!-- Manage Rankings -->
+        <section class="admin-panel">
+
+            <div class="admin-panel-title">
+
+                <div>
+
+                    <p class="eyebrow">
+                        DATABASE
+                    </p>
+
+                    <h2>
+                        MANAGE RANKINGS
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="adminRankingsList"
+                class="admin-rankings-list"
+            >
+                Loading rankings...
+            </div>
+
+        </section>
+
+
+    </div>
+
+</main>
+
+
+<script>
+
+    // ==========================================
+    // SUPABASE SETTINGS
+    // ==========================================
+    const SUPABASE_URL =
+        "https://twgnubacplneragssrot.supabase.co";
+
+    const SUPABASE_KEY =
+        "sb_publishable_O4hAWDj8dTdSsHTL6j9nrg_SEOZIQiR";
+
+    const ADMIN_USER_ID =
+        "ca1c160b-d6c8-4544-b12d-2777d39879d4";
+
+
+    // ==========================================
+    // CHECK ADMIN SESSION
+    // ==========================================
+    const savedSession =
+        localStorage.getItem(
+            "crackedTiersSession"
+        );
+
+
+    if (!savedSession) {
+
+        window.location.href =
+            "login.html";
+
+    } else {
+
+        try {
+
+            const authData =
+                JSON.parse(savedSession);
+
+
+            if (
+                !authData.user ||
+                authData.user.id !==
+                ADMIN_USER_ID
+            ) {
+
+                localStorage.removeItem(
+                    "crackedTiersSession"
+                );
+
+                window.location.href =
+                    "login.html";
+
+            } else {
+
+                document
+                    .getElementById(
+                        "adminLoading"
+                    )
+                    .style.display =
+                    "none";
+
+
+                document
+                    .getElementById(
+                        "adminDashboard"
+                    )
+                    .style.display =
+                    "block";
+
+            }
+
+        } catch (error) {
+
+            localStorage.removeItem(
+                "crackedTiersSession"
+            );
+
+            window.location.href =
+                "login.html";
+        }
+    }
+
+
+    // ==========================================
+    // GET ACCESS TOKEN
+    // ==========================================
+    function getAccessToken() {
+
+        const session =
+            JSON.parse(
+                localStorage.getItem(
+                    "crackedTiersSession"
+                )
+            );
+
+        return session.access_token;
+    }
+
+
+    // ==========================================
+    // LOAD RANKINGS
+    // ==========================================
+    async function loadAdminRankings() {
+
+        const rankingsList =
+            document.getElementById(
+                "adminRankingsList"
+            );
+
+
+        try {
+
+            const response =
+                await fetch(
+                    SUPABASE_URL +
+                    "/rest/v1/rankings" +
+                    "?select=id,player_name,category,tier" +
+                    "&order=player_name.asc",
+                    {
+                        headers: {
+                            "apikey":
+                                SUPABASE_KEY,
+
+                            "Authorization":
+                                "Bearer " +
+                                getAccessToken()
+                        }
+                    }
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Unable to load rankings"
+                );
+            }
+
+
+            const players =
+                await response.json();
+
+
+            if (players.length === 0) {
+
+                rankingsList.innerHTML =
+                    "<p>No rankings found.</p>";
+
+                return;
+            }
+
+
+            rankingsList.innerHTML =
+                players
+                    .map(
+                        function (player) {
+
+                            return `
+                                <div class="admin-ranking-row">
+
+                                    <div class="admin-player-info">
+
+                                        <strong>
+                                            ${player.player_name}
+                                        </strong>
+
+                                        <span>
+                                            ${player.category}
+                                            ·
+                                            ${player.tier}
+                                        </span>
+
+                                    </div>
+
+
+                                    <div class="admin-row-actions">
+
+                                        <button
+                                            class="admin-delete-button"
+                                            data-id="${player.id}"
+                                        >
+                                            DELETE
+                                        </button>
+
+                                    </div>
+
+                                </div>
+                            `;
+                        }
+                    )
+                    .join("");
+
+
+            addDeleteListeners();
+
+
+        } catch (error) {
+
+            console.error(
+                "Admin ranking error:",
+                error
+            );
+
+            rankingsList.innerHTML =
+                "<p>Unable to load rankings.</p>";
+        }
+    }
+
+
+    // ==========================================
+    // ADD RANKING
+    // ==========================================
+    const addRankingForm =
+        document.getElementById(
+            "addRankingForm"
+        );
+
+
+    addRankingForm.addEventListener(
+        "submit",
+        async function (event) {
+
+            event.preventDefault();
+
+
+            const playerName =
+                document
+                    .getElementById(
+                        "playerName"
+                    )
+                    .value
+                    .trim();
+
+            const category =
+                document
+                    .getElementById(
+                        "category"
+                    )
+                    .value;
+
+            const tier =
+                document
+                    .getElementById(
+                        "tier"
+                    )
+                    .value;
+
+
+            const adminMessage =
+                document.getElementById(
+                    "adminMessage"
+                );
+
+
+            adminMessage.textContent =
+                "Adding ranking...";
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        SUPABASE_URL +
+                        "/rest/v1/rankings",
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "apikey":
+                                    SUPABASE_KEY,
+
+                                "Authorization":
+                                    "Bearer " +
+                                    getAccessToken(),
+
+                                "Content-Type":
+                                    "application/json",
+
+                                "Prefer":
+                                    "return=representation"
+                            },
+
+                            body: JSON.stringify([
+                                {
+                                    player_name:
+                                        playerName,
+
+                                    category:
+                                        category,
+
+                                    tier:
+                                        tier
+                                }
+                            ])
+                        }
+                    );
+
+
+                if (!response.ok) {
+
+                    const errorData =
+                        await response.json();
+
+                    throw new Error(
+                        errorData.message ||
+                        "Unable to add ranking"
+                    );
+                }
+
+
+                adminMessage.textContent =
+                    "Ranking added successfully!";
+
+
+                addRankingForm.reset();
+
+
+                loadAdminRankings();
+
+
+            } catch (error) {
+
+                console.error(
+                    "Add ranking error:",
+                    error
+                );
+
+
+                adminMessage.textContent =
+                    error.message;
+            }
+        }
+    );
+
+
+    // ==========================================
+    // DELETE RANKING
+    // ==========================================
+    function addDeleteListeners() {
+
+        const deleteButtons =
+            document.querySelectorAll(
+                ".admin-delete-button"
+            );
+
+
+        deleteButtons.forEach(
+            function (button) {
+
+                button.addEventListener(
+                    "click",
+                    async function () {
+
+                        const rankingId =
+                            button.getAttribute(
+                                "data-id"
+                            );
+
+
+                        const confirmed =
+                            confirm(
+                                "Delete this ranking?"
+                            );
+
+
+                        if (!confirmed) {
+                            return;
+                        }
+
+
+                        try {
+
+                            const response =
+                                await fetch(
+                                    SUPABASE_URL +
+                                    "/rest/v1/rankings" +
+                                    "?id=eq." +
+                                    encodeURIComponent(
+                                        rankingId
+                                    ),
+                                    {
+                                        method:
+                                            "DELETE",
+
+                                        headers: {
+                                            "apikey":
+                                                SUPABASE_KEY,
+
+                                            "Authorization":
+                                                "Bearer " +
+                                                getAccessToken()
+                                        }
+                                    }
+                                );
+
+
+                            if (
+                                !response.ok
+                            ) {
+
+                                throw new Error(
+                                    "Unable to delete ranking"
+                                );
+                            }
+
+
+                            loadAdminRankings();
+
+
+                        } catch (error) {
+
+                            console.error(
+                                "Delete error:",
+                                error
+                            );
+
+                            alert(
+                                error.message
+                            );
+                        }
+                    }
+                );
+            }
+        );
+    }
+
+
+    // ==========================================
+    // LOGOUT
+    // ==========================================
+    document
+        .getElementById(
+            "logoutButton"
+        )
+        .addEventListener(
+            "click",
+            function () {
+
+                localStorage.removeItem(
+                    "crackedTiersSession"
+                );
+
+
+                window.location.href =
+                    "login.html";
+            }
+        );
+
+
+    // ==========================================
+    // START DASHBOARD
+    // ==========================================
+    loadAdminRankings();
+
+</script>
+
+</body>
+</html>
