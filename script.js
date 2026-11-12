@@ -8,7 +8,136 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const SUPABASE_KEY =
         "sb_publishable_O4hAWDj8dTdSsHTL6j9nrg_SEOZIQiR";
+// ================================
+// ADMIN AUTHENTICATION
+// ================================
+const ADMIN_USER_ID =
+    "ca1c160b-d6c8-4544-b12d-2777d39879d4";
 
+
+async function adminLogin(email, password) {
+
+    const response = await fetch(
+        SUPABASE_URL + "/auth/v1/token?grant_type=password",
+        {
+            method: "POST",
+
+            headers: {
+                "apikey": SUPABASE_KEY,
+                "Content-Type":
+                    "application/json"
+            },
+
+            body: JSON.stringify({
+                email: email,
+                password: password
+            })
+        }
+    );
+
+
+    const data =
+        await response.json();
+
+
+    if (!response.ok) {
+        throw new Error(
+            data.error_description ||
+            data.msg ||
+            "Unable to sign in"
+        );
+    }
+
+
+    return data;
+}
+
+
+// ================================
+// LOGIN PAGE
+// ================================
+const loginForm =
+    document.getElementById("loginForm");
+
+const loginMessage =
+    document.getElementById("loginMessage");
+
+
+if (loginForm && loginMessage) {
+
+    loginForm.addEventListener(
+        "submit",
+        async function (event) {
+
+            event.preventDefault();
+
+
+            const email =
+                document
+                    .getElementById("adminEmail")
+                    .value
+                    .trim();
+
+            const password =
+                document
+                    .getElementById("adminPassword")
+                    .value;
+
+
+            loginMessage.textContent =
+                "Signing in...";
+
+
+            try {
+
+                const authData =
+                    await adminLogin(
+                        email,
+                        password
+                    );
+
+
+                // Make sure this is YOUR
+                // authorized admin account
+                if (
+                    authData.user.id !==
+                    ADMIN_USER_ID
+                ) {
+
+                    loginMessage.textContent =
+                        "This account does not have admin access.";
+
+                    return;
+                }
+
+
+                // Store session securely enough
+                // for this simple frontend setup
+                localStorage.setItem(
+                    "crackedTiersSession",
+                    JSON.stringify(
+                        authData
+                    )
+                );
+
+
+                window.location.href =
+                    "admin.html";
+
+
+            } catch (error) {
+
+                console.error(
+                    "Login error:",
+                    error
+                );
+
+                loginMessage.textContent =
+                    error.message;
+            }
+        }
+    );
+}
 
     // ================================
     // COMMON SUPABASE FETCH FUNCTION
